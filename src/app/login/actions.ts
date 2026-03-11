@@ -9,7 +9,7 @@ function getFakeEmail(name: string) {
   return `${safeName}@veloranexus.local`;
 }
 
-export async function loginAction(formData: FormData) {
+export async function loginAction(prevState: any, formData: FormData) {
   const name = formData.get("name") as string;
   const password = formData.get("password") as string;
 
