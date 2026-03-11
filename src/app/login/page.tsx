@@ -182,6 +182,7 @@ export default function LoginPage() {
                     className="w-full bg-[#0F172A]/50 border border-slate-700/50 rounded-lg px-4 py-3 text-slate-200 placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all font-mono"
                   />
                 </div>
+                <p className="text-[10px] text-slate-500 ml-1">Test ID: 0001 (Development only)</p>
               </div>
 
               <div className="space-y-2">
