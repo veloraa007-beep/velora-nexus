@@ -4,11 +4,21 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 export async function loginAction(prevState: any, formData: FormData) {
-  const email = formData.get("email") as string;
+  const userId = formData.get("userId") as string;
   const password = formData.get("password") as string;
 
-  if (!email || !password) {
-    return { error: "Email and password are required" };
+  if (!userId || !password) {
+    return { error: "User ID and password are required" };
+  }
+
+  let email = "";
+
+  if (userId === "0001") {
+    email = "velora@admin.co";
+  } else if (userId === "0002") {
+    email = "velora@cofounder.co";
+  } else {
+    return { error: "Invalid User ID" };
   }
 
   const supabase = createClient();
