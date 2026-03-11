@@ -3,23 +3,17 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
-// Utility to convert a username into a hidden email for Supabase Auth
-function getFakeEmail(name: string) {
-  const safeName = name.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
-  return `${safeName}@velora.com`;
-}
-
 export async function loginAction(prevState: any, formData: FormData) {
-  const name = formData.get("name") as string;
+  const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  if (!name || !password) {
-    return { error: "Name and password are required" };
+  if (!email || !password) {
+    return { error: "Email and password are required" };
   }
 
   const supabase = createClient();
   const { error } = await supabase.auth.signInWithPassword({
-    email: getFakeEmail(name),
+    email,
     password,
   });
 
@@ -32,16 +26,16 @@ export async function loginAction(prevState: any, formData: FormData) {
 }
 
 export async function signupAction(formData: FormData) {
-  const name = formData.get("name") as string;
+  const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  if (!name || !password) {
-    return { error: "Name and password are required" };
+  if (!email || !password) {
+    return { error: "Email and password are required" };
   }
 
   const supabase = createClient();
   const { error } = await supabase.auth.signUp({
-    email: getFakeEmail(name),
+    email,
     password,
     options: {
       data: {

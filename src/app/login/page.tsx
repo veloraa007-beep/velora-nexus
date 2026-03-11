@@ -171,14 +171,14 @@ export default function LoginPage() {
 
               <div className="space-y-2">
                 <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider ml-1">
-                  User ID
+                  Email Address
                 </label>
                 <div className="relative group">
                   <input 
-                    name="name"
-                    type="text"
+                    name="email"
+                    type="email"
                     required
-                    placeholder="0001"
+                    placeholder="velora@cofounder.co"
                     className="w-full bg-[#0F172A]/50 border border-slate-700/50 rounded-lg px-4 py-3 text-slate-200 placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all font-mono"
                   />
                 </div>
