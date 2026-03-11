@@ -1,10 +1,18 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Receipt, FileText } from "lucide-react";
+import { Receipt, FileText, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { mockLeadsAndClients } from "@/lib/mockData";
 import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function FinancePage() {
   const invoices = mockLeadsAndClients
@@ -50,6 +58,7 @@ export default function FinancePage() {
                 <th className="px-6 py-4 whitespace-nowrap">Amount</th>
                 <th className="px-6 py-4 whitespace-nowrap">Method</th>
                 <th className="px-6 py-4 whitespace-nowrap">Status</th>
+                <th className="px-6 py-4 whitespace-nowrap w-4 text-center"></th>
               </tr>
             </thead>
             <tbody className="divide-y">
@@ -67,11 +76,31 @@ export default function FinancePage() {
                       {inv.status}
                     </Badge>
                   </td>
+                  <td className="px-6 py-4 text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0">
+                          <span className="sr-only">Open menu</span>
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-[160px]">
+                        <DropdownMenuLabel>Update Status</DropdownMenuLabel>
+                        <DropdownMenuItem>Mark as Paid</DropdownMenuItem>
+                        <DropdownMenuItem>Mark as Pending</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuLabel>Update Method</DropdownMenuLabel>
+                        <DropdownMenuItem>Credit Card</DropdownMenuItem>
+                        <DropdownMenuItem>Wire Transfer</DropdownMenuItem>
+                        <DropdownMenuItem>Cash</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </td>
                 </tr>
               ))}
               {invoices.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-6 py-8 text-center text-muted-foreground">
+                  <td colSpan={6} className="px-6 py-8 text-center text-muted-foreground">
                     No recent invoices found.
                   </td>
                 </tr>
