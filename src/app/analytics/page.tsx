@@ -134,7 +134,8 @@ export default function AnalyticsPage() {
               <YAxis tick={{ fill: "#94A3B8", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={v => `₹${(v/1000).toFixed(0)}k`} />
               <Tooltip
                 contentStyle={{ backgroundColor: "#1E293B", border: "1px solid #334155", borderRadius: "8px", color: "#F1F5F9" }}
-                formatter={(v: number) => [`₹${v.toLocaleString()}`, "Revenue"]}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                formatter={(v: any) => [`₹${Number(v ?? 0).toLocaleString()}`, "Revenue"]}
               />
               <Bar dataKey="revenue" fill="#3B82F6" radius={[4, 4, 0, 0]} />
             </BarChart>
