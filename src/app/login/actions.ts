@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 // Utility to convert a username into a hidden email for Supabase Auth
 function getFakeEmail(name: string) {
   const safeName = name.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
-  return `${safeName}@veloranexus.local`;
+  return `${safeName}@velora.com`;
 }
 
 export async function loginAction(prevState: any, formData: FormData) {
