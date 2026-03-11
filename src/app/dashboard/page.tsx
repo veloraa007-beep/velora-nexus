@@ -71,26 +71,37 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#0F172A]">
-        <Loader2 className="w-8 h-8 text-blue-400 animate-spin" />
+      <div className="flex min-h-screen items-center justify-center bg-white dark:bg-[#020617]">
+        <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#0F172A] text-slate-200 font-sans">
+    <div className="min-h-screen relative overflow-hidden bg-slate-50 dark:bg-gradient-to-br dark:from-[#020617] dark:via-[#020617] dark:to-[#0F172A] text-slate-900 dark:text-slate-200 font-sans selection:bg-blue-500/30">
+      {/* Background Glow */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-500/10 blur-[120px] rounded-full opacity-50 pointer-events-none" />
+
       {/* Header */}
-      <header className="border-b border-slate-800 bg-[#0F172A]/90 backdrop-blur sticky top-0 z-30">
+      <header className="border-b border-slate-200 dark:border-white/5 bg-white/50 dark:bg-[#020617]/50 backdrop-blur-xl sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <LayoutDashboard className="w-5 h-5 text-blue-400" />
-            <span className="text-lg font-semibold text-white tracking-tight">Velora Nexus</span>
+            <LayoutDashboard className="w-5 h-5 text-blue-500" />
+            <span className="text-lg font-semibold text-slate-900 dark:text-white tracking-tight">Velora Nexus</span>
           </Link>
 
           {/* Nav Links */}
-          <nav className="hidden md:flex items-center gap-1">
-            {[{href:"/clients",label:"Clients"},{href:"/leads",label:"Leads"},{href:"/projects",label:"Projects"}].map(({href,label}) => (
-              <Link key={href} href={href} className="px-3 py-1.5 text-sm text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-all">{label}</Link>
+          <nav className="hidden md:flex items-center gap-2">
+            {[
+              {href:"/clients", label:"Clients"},
+              {href:"/leads", label:"Leads"},
+              {href:"/projects", label:"Projects"},
+              {href:"/analytics", label:"Analytics"},
+              {href:"/finance", label:"Finance"}
+            ].map(({href,label}) => (
+              <Link key={href} href={href} className="px-3 py-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-lg transition-all">
+                {label}
+              </Link>
             ))}
           </nav>
 
@@ -98,34 +109,35 @@ export default function DashboardPage() {
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setDropdownOpen(p => !p)}
-              className="flex items-center gap-2 text-sm text-slate-300 hover:text-white bg-slate-800/60 hover:bg-slate-700/60 px-3 py-2 rounded-lg transition-all"
+              className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/5 px-3 py-2 rounded-xl transition-all"
             >
-              <div className="w-6 h-6 rounded-full bg-blue-500/30 flex items-center justify-center">
-                <User className="w-3.5 h-3.5 text-blue-400" />
+              <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
+                <User className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
               </div>
-              <span className="hidden sm:block max-w-[160px] truncate">{userEmail}</span>
-              <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+              <span className="hidden sm:block max-w-[160px] truncate font-medium">{userEmail}</span>
+              <ChevronDown className={`w-3.5 h-3.5 text-slate-500 dark:text-slate-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
             </button>
 
             <AnimatePresence>
               {dropdownOpen && (
                 <motion.div
-                  initial={{ opacity: 0, y: -6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -6 }}
+                  initial={{ opacity: 0, scale: 0.95, y: -5 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -5 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute right-0 mt-2 w-52 bg-[#1E293B] border border-slate-700 rounded-xl shadow-2xl overflow-hidden z-50"
+                  className="absolute right-0 mt-3 w-56 bg-white/90 dark:bg-[#0F172A]/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-xl shadow-2xl shadow-black/5 dark:shadow-black/50 overflow-hidden z-50"
                 >
-                  <div className="px-4 py-3 border-b border-slate-700">
-                    <p className="text-xs text-slate-400 truncate">{userEmail}</p>
+                  <div className="px-4 py-3 border-b border-slate-200 dark:border-white/5">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{userEmail}</p>
+                    <p className="text-[10px] text-blue-600 dark:text-blue-400 mt-0.5 uppercase tracking-wider font-semibold">Workspace Owner</p>
                   </div>
                   <div className="py-1">
-                    <Link href="/settings" className="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:bg-slate-700/50 hover:text-white transition-all">
-                      <Settings className="w-4 h-4" /> Settings
+                    <Link href="/settings" className="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-all">
+                      <Settings className="w-4 h-4 text-slate-400" /> Settings
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition-all"
+                      className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-all"
                     >
                       <LogOut className="w-4 h-4" /> Logout
                     </button>
@@ -138,33 +150,67 @@ export default function DashboardPage() {
       </header>
 
       {/* Body */}
-      <main className="max-w-7xl mx-auto px-6 py-10">
+      <main className="max-w-7xl mx-auto px-6 py-12 relative z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <h1 className="text-3xl font-semibold text-white mb-2">Welcome back 👋</h1>
-          <p className="text-slate-400 mb-10">Here's your Velora business overview.</p>
+          <div className="flex items-center justify-between mb-10">
+            <div>
+              <h1 className="text-3xl font-semibold text-slate-900 dark:text-white tracking-tight mb-2">Welcome back 👋</h1>
+              <p className="text-slate-500 dark:text-slate-400">Here's your Velora business overview for today.</p>
+            </div>
+          </div>
 
           {/* Live Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <StatCard icon={<Users className="w-5 h-5 text-blue-400" />} label="Active Clients" value={String(stats.clientCount)} sub="Total onboarded" />
-            <StatCard icon={<TrendingUp className="w-5 h-5 text-green-400" />} label="Total MRR" value={`₹${stats.totalMrr.toLocaleString()}`} sub="Monthly recurring" />
-            <StatCard icon={<Users className="w-5 h-5 text-yellow-400" />} label="Leads" value={String(stats.leadsCount)} sub="In pipeline" />
-            <StatCard icon={<Briefcase className="w-5 h-5 text-purple-400" />} label="Projects" value={String(stats.projectsCount)} sub="Active projects" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <StatCard 
+              icon={<TrendingUp className="w-5 h-5 text-blue-600 dark:text-blue-400" />} 
+              label="Total MRR" 
+              value={`₹${stats.totalMrr.toLocaleString()}`} 
+              sub="Monthly recurring revenue" 
+              trend="+12%" 
+            />
+            <StatCard 
+              icon={<Users className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />} 
+              label="Active Clients" 
+              value={String(stats.clientCount)} 
+              sub="Total onboarded" 
+              trend="+2" 
+            />
+            <StatCard 
+              icon={<Users className="w-5 h-5 text-amber-600 dark:text-amber-400" />} 
+              label="Pipeline Leads" 
+              value={String(stats.leadsCount)} 
+              sub="Active inquiries" 
+              trend="+5" 
+            />
+            <StatCard 
+              icon={<Briefcase className="w-5 h-5 text-purple-600 dark:text-purple-400" />} 
+              label="Active Projects" 
+              value={String(stats.projectsCount)} 
+              sub="Currently in progress" 
+              trend="100%" 
+            />
           </div>
 
           {/* Quick Links */}
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-white mt-12 mb-4">Quick Actions</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
-              { href: "/clients", label: "Manage Clients", desc: "View and add clients", color: "blue" },
-              { href: "/leads", label: "Leads Pipeline",  desc: "Track your leads", color: "yellow" },
-              { href: "/projects", label: "Projects", desc: "Monitor project progress", color: "purple" },
-            ].map(({ href, label, desc, color }) => (
+              { href: "/clients", label: "Manage Clients", desc: "View and onboard new clients", icon: <Users className="w-5 h-5 text-emerald-600 dark:text-emerald-400" /> },
+              { href: "/leads", label: "Leads Pipeline",  desc: "Track and organize inquiries", icon: <Users className="w-5 h-5 text-amber-600 dark:text-amber-400" /> },
+              { href: "/projects", label: "Active Projects", desc: "Monitor project workflows", icon: <Briefcase className="w-5 h-5 text-purple-600 dark:text-purple-400" /> },
+            ].map(({ href, label, desc, icon }) => (
               <Link
                 key={href}
                 href={href}
-                className={`group bg-white/[0.03] border border-white/10 hover:border-${color}-500/40 rounded-2xl p-6 transition-all hover:bg-white/[0.05]`}
+                className="group bg-white dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 hover:border-blue-500/30 rounded-2xl p-6 transition-all shadow-lg hover:shadow-blue-500/10"
               >
-                <p className="font-semibold text-white mb-1">{label}</p>
-                <p className="text-sm text-slate-400">{desc}</p>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2 bg-slate-50 dark:bg-white/5 rounded-lg group-hover:bg-slate-100 dark:group-hover:bg-white/10 transition-colors">
+                    {icon}
+                  </div>
+                  <p className="font-semibold text-slate-900 dark:text-white">{label}</p>
+                </div>
+                <p className="text-sm text-slate-500 dark:text-slate-400">{desc}</p>
               </Link>
             ))}
           </div>
@@ -174,15 +220,18 @@ export default function DashboardPage() {
   );
 }
 
-function StatCard({ icon, label, value, sub }: { icon: React.ReactNode; label: string; value: string; sub: string }) {
+function StatCard({ icon, label, value, sub, trend }: { icon: React.ReactNode; label: string; value: string; sub: string; trend: string }) {
   return (
     <motion.div
-      whileHover={{ scale: 1.02 }}
-      className="bg-white/[0.04] border border-white/10 rounded-2xl p-6 flex flex-col gap-1 hover:border-blue-500/30 transition-all"
+      whileHover={{ y: -4, scale: 1.01 }}
+      className="bg-white dark:bg-gradient-to-br dark:from-white/10 dark:to-white/5 border border-slate-200 dark:border-white/10 rounded-2xl p-6 flex flex-col gap-2 shadow-xl shadow-black/5 dark:shadow-black/20 backdrop-blur-xl transition-all hover:border-blue-500/30 group"
     >
-      <div className="flex items-center gap-2 text-sm text-slate-400 mb-1">{icon} {label}</div>
-      <div className="text-2xl font-semibold text-white">{value}</div>
-      <div className="text-xs text-slate-500">{sub}</div>
+      <div className="flex items-center justify-between text-sm text-slate-500 dark:text-slate-400 mb-2">
+        <span className="flex items-center gap-2 font-medium">{icon} {label}</span>
+        <span className="text-xs font-semibold bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-500/20">{trend}</span>
+      </div>
+      <div className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">{value}</div>
+      <div className="text-xs text-slate-500 dark:text-slate-500 font-medium">{sub}</div>
     </motion.div>
   );
 }

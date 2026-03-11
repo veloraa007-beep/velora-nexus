@@ -16,7 +16,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex min-h-screen w-full bg-muted/20">
+    <div className="flex min-h-screen w-full bg-slate-50 dark:bg-gradient-to-br dark:from-[#020617] dark:via-[#020617] dark:to-[#0F172A] text-slate-900 dark:text-slate-200 selection:bg-blue-500/30">
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14 lg:pl-0 flex-1 overflow-hidden transition-all duration-300 ease-in-out">
         <Header setSidebarOpen={setSidebarOpen} />
